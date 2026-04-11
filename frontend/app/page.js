@@ -11,16 +11,19 @@ export default function Home() {
       {/* header section */}
       <section className="flex justify-between items-center p-4">
         <HelloUser />
-        <div className="flex gap-2 items-center">
+        <div className="hidden md:flex gap-2 items-center">
           <ViewAllGroups />
           <CreateGroupButton />
           <ModeToggle />
           <UserButton />
         </div>
+        <div className="flex gap-2 items-center md:hidden">
+          
+          <ModeToggle />
+          <UserButton />
+        </div>
       </section>
       <div className="w-full border-border border-b"></div>
-
-
     </main>
   );
 }
