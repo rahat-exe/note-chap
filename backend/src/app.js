@@ -24,11 +24,11 @@ app.all("/api/auth/*path", toNodeHandler(auth))
 
 // routes
 app.use("/api/users", userRoutes);
-app.use("/api/group", groupRoutes)
+app.use("/api/groups", groupRoutes)
 
 // health check
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.json({message:"Hello form backend...server is running"});
 });
 
 export default app;

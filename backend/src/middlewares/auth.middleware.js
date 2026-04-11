@@ -1,10 +1,10 @@
 import {auth} from '../auth.ts';
-import { fromNodeMiddleware } from "better-auth/node";
+import { fromNodeHeaders } from "better-auth/node";
 
 export async function verifySession(req,res,next){
     try {
         const session = await auth.api.getSession({
-            headers:fromNodeMiddleware(req)
+          headers: fromNodeHeaders(req),
         });
 
         if(!session){
