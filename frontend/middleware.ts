@@ -5,6 +5,7 @@ const publicRoutes = ["/welcome", "/sign-in"];
 
 export function middleware(request: NextRequest) {
   const session = getSessionCookie(request);
+  console.log(session)
   const { pathname } = request.nextUrl;
 
   const isPublicRoute = publicRoutes.includes(pathname);
