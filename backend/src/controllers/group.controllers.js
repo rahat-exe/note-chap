@@ -1,3 +1,4 @@
+import { success } from "better-auth";
 import { Group } from "../models/group.model.js";
 
 export async function createGroup(req, res) {
@@ -36,9 +37,59 @@ export async function createGroup(req, res) {
   }
 }
 
-export async function getGroups(req, res) {}
+export async function getGroups(req, res) {
+  try {
+    const groups = await Group.find({
+      members: req.user.id,
+    })
+      .populate("createdBy", "name email image")
+      .sort({ createdAt: -1 });
 
-export async function getGroupById(req, res) {}
+    if (groups.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No group found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Groups found",
+      data: groups,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+}
+
+export async function getGroupById(req, res) {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No group found with this id" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Group found",
+      data: group,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+}
 
 export async function joinGroup(req, res) {}
 
