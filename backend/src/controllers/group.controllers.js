@@ -1,4 +1,3 @@
-import { success } from "better-auth";
 import { Group } from "../models/group.model.js";
 
 export async function createGroup(req, res) {
