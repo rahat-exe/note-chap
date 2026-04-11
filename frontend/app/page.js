@@ -1,6 +1,7 @@
 import CreateGroupButton from "@/components/CreateGroupButton";
 import HelloUser from "@/components/HelloUser";
 import SignOutButton from "@/components/SignOutButton";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import { UserButton } from "@/components/UserButton";
 import ViewAllGroups from "@/components/ViewAllGroups";
 
@@ -13,12 +14,13 @@ export default function Home() {
         <div className="flex gap-2 items-center">
           <ViewAllGroups />
           <CreateGroupButton />
+          <ModeToggle />
           <UserButton />
         </div>
       </section>
       <div className="w-full border-border border-b"></div>
 
-      
+
     </main>
   );
 }
