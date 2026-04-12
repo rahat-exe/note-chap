@@ -5,7 +5,6 @@ import SignOutButton from "@/components/SignOutButton";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { UserButton } from "@/components/UserButton";
 import ViewAllGroups from "@/components/ViewAllGroups";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -14,14 +13,16 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import MobileNav from "@/components/MobileNav";
 
 export default function Home() {
   return (
-    <main className=" pt-2 px-10">
-      {/* header section */}
-      <nav>
+    <main className="pt-2">
+      <nav className="md:px-10">
         <section className="flex justify-between items-center p-4">
           <HelloUser />
+
+          {/* Desktop */}
           <div className="hidden md:flex gap-2 items-center">
             <JoinGroup />
             <ViewAllGroups />
@@ -29,18 +30,15 @@ export default function Home() {
             <ModeToggle />
             <UserButton />
           </div>
-          {/* Mobile Navigation */}
+
+          {/* Mobile */}
           <div className="flex gap-2 items-center md:hidden">
             <ModeToggle />
             <UserButton />
+            <MobileNav />
           </div>
         </section>
         <div className="border-b"></div>
-        {/* <div className="flex justify-around gap-2 items-center md:hidden pt-3">
-          <JoinGroup />
-          <ViewAllGroups />
-          <CreateGroupButton />
-        </div> */}
       </nav>
     </main>
   );
