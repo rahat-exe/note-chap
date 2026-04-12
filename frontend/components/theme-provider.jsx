@@ -7,5 +7,9 @@ export function ThemeProvider({
   children,
   ...props
 }) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+  return (
+    <NextThemesProvider {...props} scriptProps={{ "data-cfasync": "false" }}>
+      {children}
+    </NextThemesProvider>
+  );
 }
