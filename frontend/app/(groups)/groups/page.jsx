@@ -1,13 +1,13 @@
-"use client"
-import { useGroups } from '@/hooks/useGroups'
+
 import React from 'react'
+import Groups from './_components/Groups'
 
 const ViewGroups = () => {
-  const {data, isLoading,isError, error} = useGroups();
-  console.log(data)
-  console.log(error)
+  
   return (
-    <div>ViewGroups</div>
+    <div>
+      <Groups />
+    </div>
   )
 }
 

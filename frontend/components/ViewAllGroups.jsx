@@ -7,11 +7,15 @@ const ViewAllGroups = () => {
     const router = useRouter();
   return (
     <div>
-        <Button size='sm' onClick={() => router.push('/groups')}>
-            View Groups
-        </Button>
+      <Button
+        variant="destructive"
+        size="sm"
+        onClick={() => router.push("/groups")}
+      >
+        View Groups
+      </Button>
     </div>
-  )
+  );
 }
 
 export default ViewAllGroups
