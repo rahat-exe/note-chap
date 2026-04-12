@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import userRoutes from "./routes/user.routes.js";
 import groupRoutes from "./routes/group.route.js";
@@ -18,6 +19,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 // Mount Better Auth — handles /api/auth/** routes automatically
 app.all("/api/auth/*path", toNodeHandler(auth))

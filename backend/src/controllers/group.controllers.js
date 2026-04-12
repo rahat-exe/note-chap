@@ -18,7 +18,7 @@ export async function createGroup(req, res) {
       tags: tags || [],
       createdBy: req.user.id,
       members: [req.user.id],
-      admin: [req.user.id],
+      admins: [req.user.id],
     });
 
     res.status(201).json({
@@ -46,8 +46,8 @@ export async function getGroups(req, res) {
 
     if (groups.length === 0) {
       return res
-        .status(404)
-        .json({ success: false, message: "No group found" });
+        .status(200)
+        .json({ success: true, message: "No group found" });
     }
 
     return res.status(200).json({
@@ -56,7 +56,7 @@ export async function getGroups(req, res) {
       data: groups,
     });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",
