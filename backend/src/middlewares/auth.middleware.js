@@ -4,7 +4,7 @@ import { fromNodeHeaders } from "better-auth/node";
 export async function verifySession(req,res,next){
     try {
         const session = await auth.api.getSession({
-          headers: fromNodeHeaders(req),
+          headers: fromNodeHeaders(req.headers),
         });
 
         if(!session){
@@ -13,7 +13,7 @@ export async function verifySession(req,res,next){
               .json({ success: false, message: "Unarthorized" });
         }
 
-        console.log(session)
+        // console.log(session)
 
         req.user = session.user;
         req.sesson = session.session;
