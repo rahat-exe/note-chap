@@ -9,7 +9,7 @@ export async function fetchGroups(){
     );
     const result = await response.json()
     if(!response.ok) throw new Error(result)
-    return result
+    return result.data
 }
 
 export async function createGroup(newGroup){
@@ -20,6 +20,7 @@ export async function createGroup(newGroup){
         body:JSON.stringify(newGroup)
     })
     const result = await response.json()
+    console.log(result)
     if(!response.ok) throw new Error(result.error)
     return result
 }
