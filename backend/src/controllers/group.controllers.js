@@ -90,10 +90,170 @@ export async function getGroupById(req, res) {
   }
 }
 
-export async function joinGroup(req, res) {}
+export async function joinGroup(req, res) {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findById(groupId);
 
-export async function leaveGroup(req, res) {}
+    if (!group) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No group found with this id" });
+    }
 
-export async function deleteGroup(req, res) {}
+    const alreadyMember = group.members.some(
+      (id) => id.toString() === req.user.id.toString(),
+    );
 
-export async function exploreGroups(req, res) {}
+    if (alreadyMember) {
+      return res.status(200).json({
+        success: false,
+        message: "Already a member",
+      });
+    }
+
+    group.members.push(req.user.id);
+    await group.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Joined successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+}
+
+export async function leaveGroup(req, res) {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findById(groupId);
+
+    if (!group) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No group found with this id" });
+    }
+
+    const isMember = group.members.some(
+      (id) => id.toString() === req.user.id.toString(),
+    );
+
+    if (!isMember) {
+      return res.status(200).json({
+        success: false,
+        message: "Not a member",
+      });
+    }
+
+    const isAdmin = group.admins.some((id) => id.toString() === req.user.id.toString());
+    if(isAdmin){
+      return res.status(400).json({
+        success: false,
+        message: "Cannot leave as admin",
+      });
+    }
+    
+
+    group.members = group.members.filter(
+      (id) => id.toString() !== req.user.id.toString(),
+    );
+    await group.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Left successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+}
+
+export async function deleteGroup(req, res) {
+  try {
+    const { groupId } = req.params;
+    const group = await Group.findOneAndDelete({
+      _id:groupId,
+      createdBy:req.user.id
+    });
+
+    if (!group) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No group found or unauthorized" });
+    }
+
+    return res.status(200).json({
+      success:true,
+      message:"Group deleted",
+    })
+
+    
+  } catch (error) {
+     console.error(error);
+     res.status(500).json({
+       success: false,
+       message: "Internal server error",
+       error: error.message,
+     });
+  }
+}
+
+export async function exploreGroups(req, res) {
+  try {
+    const { name } = req.query;
+
+    if (!name || name.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Search query is required",
+      });
+    }
+
+    const sanitized = name.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const groups = await Group.find({
+      groupName: { $regex: sanitized, $options: "i" },
+    })
+      .select("groupName groupDescription members createdBy isPublic")
+      .lean(); //Without .lean(), Mongoose returns document objects not plain JS objects. So when you spread ...group it doesn't spread the document fields properly:
+
+    if (groups.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No groups found",
+      });
+    }
+
+    const groupsWithMembership = groups.map((group) => ({
+      ...group,
+      memberCount: group.members.length,
+      isJoined: group.members.some(
+        (id) => id.toString() === req.user.id.toString(),
+      ),
+    }));
+
+    return res.status(200).json({
+      success: true,
+      message: "Groups fetched successfully",
+      data: groupsWithMembership,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+}
