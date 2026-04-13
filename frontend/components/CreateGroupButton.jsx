@@ -7,7 +7,7 @@ const CreateGroupButton = () => {
     const router = useRouter();
   return (
     <div>
-        <Button variant="destructive" size="sm" onClick={()=>router.push("/create-group")}>
+        <Button size="sm" onClick={()=>router.push("/create-group")}>
             Create Group
         </Button>
     </div>

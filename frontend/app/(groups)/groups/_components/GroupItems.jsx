@@ -20,6 +20,7 @@ import {
   Hash,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const GroupItems = ({ group }) => {
   const {
@@ -96,8 +97,12 @@ const GroupItems = ({ group }) => {
               size="sm"
               className="hover:bg-primary hover:text-primary-foreground self-start sm:self-auto shrink-0 text-xs sm:text-sm h-8 sm:h-9"
             >
-              <span className="hidden sm:inline">View Group</span>
-              <span className="sm:hidden">View</span>
+              <span className="hidden sm:inline">
+                <Link href={`/groups/${_id}`}>View</Link>
+              </span>
+              <span className="sm:hidden">
+                <Link href={`/groups/${_id}`}>View</Link>
+              </span>
               <ArrowRight className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>

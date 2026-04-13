@@ -8,7 +8,7 @@ const ViewAllGroups = () => {
   return (
     <div>
       <Button
-        variant="destructive"
+        
         size="sm"
         onClick={() => router.push("/groups")}
       >
