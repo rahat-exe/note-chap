@@ -64,11 +64,11 @@ export default function CreateGroupForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-br from-background to-muted/20 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <Card className="shadow-xl border-0 overflow-hidden">
           {/* Header Section with Gradient */}
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background p-6 sm:p-8">
+          <div className="bg-linear-to-r from-primary/10 via-primary/5 to-background p-6 sm:p-8">
             <CardHeader className="p-0 space-y-2">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg">

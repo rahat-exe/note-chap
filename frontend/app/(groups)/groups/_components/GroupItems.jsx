@@ -50,7 +50,7 @@ const GroupItems = ({ group }) => {
     <div className="w-full max-w-full sm:max-w-2xl mx-auto p-2 sm:p-4">
       <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
         {/* Cover Image Section */}
-        <div className="relative h-32 sm:h-40 md:h-48 bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="relative h-32 sm:h-40 md:h-48 bg-linear-to-r from-blue-500 to-purple-600">
           {coverImage ? (
             <img
               src={coverImage}
@@ -62,7 +62,7 @@ const GroupItems = ({ group }) => {
               <Users className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16" />
             </div>
           )}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 sm:p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-2 sm:p-4">
             <Badge
               variant={isPublic ? "default" : "secondary"}
               className="mb-1 sm:mb-2 text-xs sm:text-sm"

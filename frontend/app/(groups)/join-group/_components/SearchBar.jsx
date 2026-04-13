@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import {
   useJoinGroup,
   useLeaveGroup,
@@ -27,10 +27,12 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation.js";
 
 export default function SearchGroups() {
   const [search, setSearch] = useState("");
   const [enabled, setEnabled] = useState(false);
+  const router = useRouter();
 
   const { data: groups, isLoading, error, refetch } = useSearchGroup(search);
   const {
@@ -56,7 +58,7 @@ export default function SearchGroups() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-br from-background to-muted/20 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
@@ -166,7 +168,7 @@ export default function SearchGroups() {
                 className="overflow-hidden hover:shadow-lg transition-all duration-300"
               >
                 {/* Cover */}
-                <div className="relative h-32 bg-gradient-to-r from-primary/20 to-primary/10">
+                <div className="relative h-32 bg-linear-to-r from-primary/20 to-primary/10">
                   {group.coverImage ? (
                     <img
                       src={group.coverImage}
@@ -215,15 +217,20 @@ export default function SearchGroups() {
                       <Button
                         size="sm"
                         variant={group.isJoined ? "outline" : "default"}
-                        onClick={() => mutate(group._id,{
-                          onSuccess: (data) => {
-                            console.log(data);
-                            toast.success(data.message);
-                          },
-                          onError: (error) => {
-                            toast.error(error.message);
-                          }
-                        })}
+                        onClick={() =>(
+                          mutate(group._id, {
+                            onSuccess: (data) => {
+                              console.log(data);
+                              toast.success(data.message);
+                            },
+                            onError: (error) => {
+                              toast.error(error.message);
+                            },
+                          }),
+                          refetch()
+                        )
+                          
+                        }
                         disabled={group.isJoined}
                         className={
                           group.isJoined
@@ -246,17 +253,20 @@ export default function SearchGroups() {
                       {group.isJoined && (
                         <Button
                           size="sm"
-                          onClick={() => leaveMutate(group._id,
-                            {
+                          onClick={() =>(
+
+                            leaveMutate(group._id, {
                               onSuccess: (data) => {
                                 console.log(data);
                                 toast.success(data.message);
                               },
                               onError: (error) => {
                                 toast.error(error.message);
-                              }
-                            }
-                          )}
+                              },
+                            }),
+                            refetch()
+                          )
+                          }
                         >
                           Leave
                         </Button>
