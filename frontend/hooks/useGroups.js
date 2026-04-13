@@ -2,6 +2,7 @@
 
 import {
   createGroup,
+  fetchGroupById,
   fetchGroups,
   joinGroup,
   leaveGroup,
@@ -13,6 +14,12 @@ export function useGroups() {
   return useQuery({
     queryKey: ["groups"],
     queryFn: fetchGroups,
+  });
+}
+export function useGroupById(id) {
+  return useQuery({
+    queryKey: ["group", id],
+    queryFn: () => fetchGroupById(id),
   });
 }
 

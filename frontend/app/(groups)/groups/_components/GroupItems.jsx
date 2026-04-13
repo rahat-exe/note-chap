@@ -20,6 +20,7 @@ import {
   Hash,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const GroupItems = ({ group }) => {
   const {
@@ -50,7 +51,7 @@ const GroupItems = ({ group }) => {
     <div className="w-full max-w-full sm:max-w-2xl mx-auto p-2 sm:p-4">
       <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
         {/* Cover Image Section */}
-        <div className="relative h-32 sm:h-40 md:h-48 bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="relative h-32 sm:h-40 md:h-48 bg-linear-to-r from-blue-500 to-purple-600">
           {coverImage ? (
             <img
               src={coverImage}
@@ -62,7 +63,7 @@ const GroupItems = ({ group }) => {
               <Users className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16" />
             </div>
           )}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 sm:p-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-2 sm:p-4">
             <Badge
               variant={isPublic ? "default" : "secondary"}
               className="mb-1 sm:mb-2 text-xs sm:text-sm"
@@ -96,8 +97,12 @@ const GroupItems = ({ group }) => {
               size="sm"
               className="hover:bg-primary hover:text-primary-foreground self-start sm:self-auto shrink-0 text-xs sm:text-sm h-8 sm:h-9"
             >
-              <span className="hidden sm:inline">View Group</span>
-              <span className="sm:hidden">View</span>
+              <span className="hidden sm:inline">
+                <Link href={`/groups/${_id}`}>View</Link>
+              </span>
+              <span className="sm:hidden">
+                <Link href={`/groups/${_id}`}>View</Link>
+              </span>
               <ArrowRight className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </div>

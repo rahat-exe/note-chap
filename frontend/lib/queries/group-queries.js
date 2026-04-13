@@ -29,8 +29,8 @@ export async function fetchGroupById(id) {
     credentials: "include",
   });
   const result = await response.json();
-  if (!response.ok) throw new Error(result);
-  return result;
+  if (!response.ok) throw new Error(result.message);
+  return result.data;
 }
 
 export async function searchGroups(search) {
