@@ -1,23 +1,14 @@
 import CreateGroupButton from "@/components/CreateGroupButton";
 import HelloUser from "@/components/HelloUser";
 import JoinGroup from "@/components/JoinGroup";
-import SignOutButton from "@/components/SignOutButton";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { UserButton } from "@/components/UserButton";
 import ViewAllGroups from "@/components/ViewAllGroups";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-  SheetHeader,
-} from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
 import MobileNav from "@/components/MobileNav";
 
 export default function Home() {
   return (
-    <main className="pt-2">
+    <main className=" min-h-screen min-w-full">
       <nav className="md:px-10">
         <section className="flex justify-between items-center p-4">
           <HelloUser />
@@ -40,6 +31,15 @@ export default function Home() {
         </section>
         <div className="border-b"></div>
       </nav>
+      <section className="grid grid-cols-1 lg:grid-cols-4 px-2 md:px-10 lg:px-15 mt-2 min-h-full">
+        <div className="bg-red-500 hidden lg:inline">
+          <p>lorem10 jdj jdn qdjwndnd djndnndn dfghj dfghj sdfghj</p>
+        </div>
+        <div className="bg-blue-400 lg:col-span-2 ">
+          <h1>asdfghjk qwertyuio zxcvbnm ertyui</h1>
+        </div>
+        <div className="bg-red-500">a</div>
+      </section>
     </main>
   );
 }

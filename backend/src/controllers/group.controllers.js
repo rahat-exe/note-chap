@@ -257,3 +257,33 @@ export async function exploreGroups(req, res) {
     });
   }
 }
+
+export async function getMembers(req, res){
+  try {
+    const {groupId} = req.params;
+    const group = await Group.findById(groupId)
+      .select("members admins createdBy")
+      .populate("members", "name email image")
+      .populate("admins", "name email image")
+      .populate("createdBy", "name email image");
+
+    if(!group){
+      return res.status(404).json({
+        success:false,
+        message:"Group with this id not found",
+      })
+    }
+    return res.status(200).json({
+      success:true,
+      message:"Group members found!",
+      data:group
+    })
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success:false,
+      message:"Internal server error",
+      error:error.message
+    })
+  }
+}

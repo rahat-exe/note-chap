@@ -1,6 +1,6 @@
 import express from 'express'
 import { verifySession } from '../middlewares/auth.middleware.js'
-import { createGroup, deleteGroup, exploreGroups, getGroupById, getGroups, joinGroup, leaveGroup } from '../controllers/group.controllers.js'
+import { createGroup, deleteGroup, exploreGroups, getGroupById, getGroups, getMembers, joinGroup, leaveGroup } from '../controllers/group.controllers.js'
 
 
 const router = express.Router()
@@ -19,6 +19,8 @@ router.post('/:groupId/join',verifySession,joinGroup) // POST- /api/groups/:grou
 router.delete('/:groupId/leave',verifySession,leaveGroup) // DELETE- /api/groups/:groupId/leave - leave a group
 
 router.delete('/:groupId',verifySession,deleteGroup) // DELETE- /api/groups/:groupId - delete a group
+
+router.get("/:groupId/members", verifySession, getMembers);
 
 
 export default router;
