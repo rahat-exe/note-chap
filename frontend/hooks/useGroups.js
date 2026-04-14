@@ -4,6 +4,7 @@ import {
   createGroup,
   fetchGroupById,
   fetchGroups,
+  getMembers,
   joinGroup,
   leaveGroup,
   searchGroups,
@@ -60,4 +61,12 @@ export function useLeaveGroup() {
       queryClient.invalidateQueries({ queryKey: ["search"] });
     },
   });
+}
+
+export function useGetMembers(groupId){
+  return useQuery({
+    queryKey:["group-members",groupId],
+    queryFn:() => getMembers(groupId),
+    enabled:false
+  })
 }

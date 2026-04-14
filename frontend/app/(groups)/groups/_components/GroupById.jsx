@@ -15,7 +15,7 @@ import {
   MoreVertical,
   Tag,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/hooks/useUser";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import MembersList from "./MembersList";
 
 // Demo notes data
 const demoNotes = [
@@ -67,8 +69,9 @@ const GroupById = ({ groupId }) => {
   const { data, isLoading, isError, error } = useGroupById(groupId);
   console.log(data);
   console.log(error);
+  const [open, setOpen] = useState(false);
 
-  const { userId } = useUser()
+  const { userId } = useUser();
   const isAdmin = data?.admins.some(
     (id) => id.toString() === userId.toString(),
   );
@@ -95,8 +98,13 @@ const GroupById = ({ groupId }) => {
   }
 
   let groupData;
-  if(data) {
-    groupData = data
+  if (data) {
+    groupData = data;
+  }
+
+  
+  const handleOpen = () =>{
+    setOpen(prev => !prev)
   }
 
   return (
@@ -125,7 +133,24 @@ const GroupById = ({ groupId }) => {
                 <div className="flex items-center gap-4 mt-3 text-sm text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    {groupData.members.length} members
+
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className={`text-blue-200`}
+                      onClick={handleOpen}
+                    >
+                      {groupData.members.length} members
+                    </Button>
+                    <Dialog open={open} onOpenChange={setOpen}>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Members</DialogTitle>
+                        </DialogHeader>
+                          <MembersList groupId={groupData._id} />
+                        
+                      </DialogContent>
+                    </Dialog>
                   </span>
                   <span className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
@@ -142,21 +167,21 @@ const GroupById = ({ groupId }) => {
             {/* Action Buttons Space */}
             <div className="flex items-center gap-2 flex-wrap">
               {isAdmin && (
-                <Button  variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2">
                   <UserPlus className="w-4 h-4" />
                   Invite
                 </Button>
               )}
 
               {isAdmin && (
-                <Button  variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2">
                   <ArrowDownCircle className="w-4 h-4" />
                   Demote to Member
                 </Button>
               )}
 
               {isAdmin && (
-                <Button  variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2">
                   <ArrowUpCircle className="w-4 h-4" />
                   Promote to Admin
                 </Button>

@@ -61,3 +61,12 @@ export async function leaveGroup(groupId) {
   if (!response.ok) throw new Error(result.message);
   return result;
 }
+
+export async function getMembers(groupId){
+  const response = await fetch(`${url}/api/groups/${groupId}/members`,{
+    credentials:"include"
+  })
+  const result = await response.json();
+  if(!response.ok) throw new Error(result.error);
+  return result.data;
+}
