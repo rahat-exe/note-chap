@@ -32,3 +32,34 @@ export const auth = betterAuth({
     },
   },
 });
+
+
+/* 
+needed this advanced setting if both are in differnt domains
+export const auth = betterAuth({
+  secret: process.env.BETTER_AUTH_SECRET,
+  advanced: {
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+      partitioned: true, // recommended for modern browsers
+    },
+  },
+  // ...
+});
+*/
+
+/* 
+needed this advanced setting if using sun-domains like app.com and api.app.com
+export const auth = betterAuth({
+  secret: process.env.BETTER_AUTH_SECRET,
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: "myapp.com", // root domain
+    },
+  },
+});
+
+*/
+
