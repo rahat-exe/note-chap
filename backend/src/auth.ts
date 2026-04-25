@@ -7,7 +7,7 @@ const client = new MongoClient(process.env.MONGO_URI!);
 const db = client.db(); // uses default db from URI
 
 export const auth = betterAuth({
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: ["http://localhost:3000"], // Frontend URL
   database: mongodbAdapter(db),
 
   baseURL: process.env.BETTER_AUTH_URL!, // e.g. http://localhost:5000
