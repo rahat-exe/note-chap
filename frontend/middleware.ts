@@ -27,6 +27,8 @@ export const config = {
   ],
 };
 
+// todo the problem is that if the cookies are expired then it behaved differently
+
 // import { NextRequest, NextResponse } from "next/server";
 // import { getSessionCookie } from "better-auth/cookies";
 
