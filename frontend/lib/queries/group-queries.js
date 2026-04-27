@@ -11,11 +11,25 @@ export async function fetchGroups() {
   return result.data;
 }
 
+let csrfToken = null;
+export async function getCsrfToken(){
+    if(csrfToken) return csrfToken;
+
+    const response = await fetch(`${url}/api/csrf-token`,{
+      credentials:'include'
+    })
+    const result = await response.json();
+    csrfToken = result.csrfToken;
+    return csrfToken
+}
+
+
 export async function createGroup(newGroup) {
+  const token = await getCsrfToken()
   const response = await fetch(`${url}/api/groups`, {
     method: "POST",
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json",'x-csrf-token':token },
     body: JSON.stringify(newGroup),
   });
   const result = await response.json();
@@ -43,9 +57,11 @@ export async function searchGroups(search) {
 }
 
 export async function joinGroup(groupId) {
+  const token = await getCsrfToken();
   const response = await fetch(`${url}/api/groups/${groupId}/join`, {
     method: "POST",
     credentials: "include",
+    headers: { "Content-Type": "application/json", "x-csrf-token": token },
   });
   const result = await response.json();
   if (!response.ok) throw new Error(result.message);
@@ -53,9 +69,11 @@ export async function joinGroup(groupId) {
 }
 
 export async function leaveGroup(groupId) {
+  const token = await getCsrfToken();
   const response = await fetch(`${url}/api/groups/${groupId}/leave`, {
     method: "DELETE",
     credentials: "include",
+    headers: { "Content-Type": "application/json", "x-csrf-token": token },
   });
   const result = await response.json();
   if (!response.ok) throw new Error(result.message);

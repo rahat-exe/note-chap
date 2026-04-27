@@ -30,10 +30,20 @@ export function UserButton() {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => router.push("/sign-in")}
+        onClick={async () =>
+          await authClient.signOut({
+            fetchOptions: {
+              onSuccess: () => {
+                console.log("Signed out");
+                router.refresh(); // Refresh server components
+                router.push("/welcome"); // Optional: redirect home
+              },
+            },
+          })
+        }
         className="text-foreground hover:text-foreground hover:bg-accent"
       >
-        Sign In
+        Sign Out
       </Button>
     );
   }
@@ -115,6 +125,7 @@ export function UserButton() {
             await authClient.signOut({
               fetchOptions: {
                 onSuccess: () => {
+                  console.log("Signed out");
                   router.refresh(); // Refresh server components
                   router.push("/welcome"); // Optional: redirect home
                 },
