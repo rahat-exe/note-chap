@@ -57,9 +57,11 @@ export async function searchGroups(search) {
 }
 
 export async function joinGroup(groupId) {
+  const token = await getCsrfToken();
   const response = await fetch(`${url}/api/groups/${groupId}/join`, {
     method: "POST",
     credentials: "include",
+    headers: { "Content-Type": "application/json", "x-csrf-token": token },
   });
   const result = await response.json();
   if (!response.ok) throw new Error(result.message);
@@ -67,9 +69,11 @@ export async function joinGroup(groupId) {
 }
 
 export async function leaveGroup(groupId) {
+  const token = await getCsrfToken();
   const response = await fetch(`${url}/api/groups/${groupId}/leave`, {
     method: "DELETE",
     credentials: "include",
+    headers: { "Content-Type": "application/json", "x-csrf-token": token },
   });
   const result = await response.json();
   if (!response.ok) throw new Error(result.message);
